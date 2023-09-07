@@ -64,16 +64,28 @@ app.get("/books/:id", async (req, res) => {
 });
 
 // Update a book
-app.put('/books/:id',(req,res) => {
+app.put("/books/:id", async (req, res) => {
   try {
-    const { id } = req.params
-    const { title, author, publishYear } = req.body
-    
+    const { title, author, publishYear } = req.body;
+    if (!title || !author || !publishYear) {
+      return res.status(400).send({ message: "Please insert all values!" });
+    }
+    const { id } = req.params;
+    const book = await Book.findById(id);
+    if (!book) {
+      return res.status(404).json({ message: "Book not found!" });
+    }
+
+    // Update the book only if it exists
+    await Book.findByIdAndUpdate(id, req.body);
+
+    return res.status(200).send({ message: "Book updated successfully" });
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ message: error.message });
   }
-})
+});
+
 
 mongoose
   .connect(mongoURI)
