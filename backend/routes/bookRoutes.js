@@ -34,10 +34,9 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const allBook = await Book.find({});
-    return res.status(200).send({
-      count: allBook.length,
-      allBook,
-    });
+    return res.status(200).send(
+      allBook
+    );
   } catch (error) {
     console.log(error.message);
     res.status(500).send({ message: error.message });

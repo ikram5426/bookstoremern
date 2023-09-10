@@ -1,8 +1,11 @@
+import BackBtn from '@/app/components/BackBtn'
 import React from 'react'
 
 const deleteBook = () => {
   return (
-    <div>deleteBook</div>
+    <>
+    <BackBtn/>
+    </>
   )
 }
 
